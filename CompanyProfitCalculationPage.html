@@ -1,0 +1,162 @@
+
+<!doctype html>
+<html>
+
+<head>
+	<title>Yuxiao Fang</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<style>
+		#table1 {
+			width: 35vw;
+			height: 45vh;
+		}
+
+		#table2 {
+			border: 1px solid black;
+		}
+
+		.Font {
+			font-size: 1em;
+		}
+
+		.tableRow {
+			width: 15vw;
+			font-size: 1.5em;
+			border: 1px solid black;
+			border-collapse: collapse;
+			text-align: center;
+			font-size: 1.5em;
+			font-weight: bold;
+		}
+
+		#cal {
+			display: flex;
+			font-size: 2em;
+		}
+	</style>
+</head>
+
+<body>
+	<form id="form1" action="nowhere.php" style="margin-bottom:80px" name="form1" onsubmit="return submitF()"
+		action="no.php">
+		<fieldset id="fs1" style="width:35vw; height:45vh; background-color:pink">
+			<legend class="Font" style="font-weight:bold">Fill the form</legend>
+			<table id="table1">
+				<tr>
+					<td class="Font">Company Name:</td>
+					<td>
+						<input id="CN" name="CN" type="String" autofocus>
+					</td>
+				</tr>
+				<tr>
+					<td class="Font">Owner:</td>
+					<td>
+						<input id="OW" name="OW" type="String">
+					</td>
+				</tr>
+				<tr>
+					<td class="Font">Address:</td>
+					<td>
+						<input id="AD" name="AD" type="String">
+					</td>
+				</tr>
+				<tr>
+					<td class="Font">Phone Number:</td>
+					<td>
+						<input id="PN" name="PN" type="String">
+					</td>
+				</tr>
+				<tr>
+					<td class="Font">Annual sales:</td>
+					<td>
+						<input id="AS" name="AS" type="number">
+					</td>
+				</tr>
+				<tr>
+					<td class="Font">Borrow amount:</td>
+					<td>
+						<input id="BA" name="BA" type="number">
+					</td>
+				</tr>
+				<tr>
+					<td class="Font">Payment terms:</td>
+					<td>
+						<input id="PT" name="PT" type="number">
+					</td>
+				</tr>
+				<tr style="text-align:right">
+					<td>
+						<input class="Font" type="submit"></button>
+					</td>
+				</tr>
+			</table>
+		</fieldset>
+	</form>
+
+
+	<button onclick="calF()" id="cal">Calculate</button>
+
+	<form id="form2" name="form2">
+		<table id="table2" name="table" style="background-color:red">
+			<tr>
+				<td class="tableRow">Company Name</td>
+				<td class="tableRow">Annual Sales</td>
+				<td class="tableRow">Borrow Amount</td>
+				<td class="tableRow">Payment Terms</td>
+				<td class="tableRow">Interest</td>
+				<td class="tableRow">Payment</td>
+				<td class="tableRow">Profit</td>
+			</tr>
+		</table>
+	</form>
+</body>
+
+<script>
+	var companyName;
+	var annualSales;
+	var borrowAmount;
+	var paymentTerms;
+	var interest;
+	var payment;
+	var profit;
+
+	function submitF() {
+		companyName = document.getElementById("CN").value;
+		annualSales = document.getElementById("AS").value;
+		borrowAmount = document.getElementById("BA").value;
+		paymentTerms = document.getElementById("PT").value;
+		return false;
+	}
+
+	var tbl = document.getElementById("table2");
+
+	function calF() {
+		var rw = document.createElement('tr');
+
+		// Number()
+		interest = Number(borrowAmount) * Number(paymentTerms) / 12 * 0.03;
+		payment = Number(borrowAmount) + Number(interest);
+		profit = Number(payment) - Number(borrowAmount);
+
+		console.log(interest);
+
+		var _list = [companyName, annualSales, borrowAmount,
+			paymentTerms, interest, payment, profit
+		];
+
+		for (var a = 0; a < _list.length; a++) {
+			var cell = document.createElement("td");
+			cell.setAttribute("class", "tableRow");
+			cell.textContent = _list[a];
+			//console.log(_list[a]);
+
+			rw.appendChild(cell);
+		}
+		tbl.appendChild(rw);
+		document.form2.table.appendChild(tbl);
+	}
+</script>
+
+</html>
